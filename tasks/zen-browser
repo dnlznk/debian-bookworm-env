@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+if command -v zen &> /dev/null; then
+    rm -rf $path
+fi
+
+path="/usr/lib/zen"
+file=$(mktemp)
+
+curl -fsSLo $file https://github.com/zen-browser/desktop/releases/latest/download/zen.linux-x86_64.tar.xz
+
+sudo mkdir $path
+sudo tar xf $file --directory=$path
+
+sudo ln -s $path/zen /usr/bin/zen
+
+sudo tee /usr/share/applications/zen-browser.desktop > /dev/null <<EOF
+[Desktop Entry]
+Name=Zen
+Exec=zen
+Icon=zen
+Type=Application
+Categories=Network;WebBrowser;
+EOF
