@@ -1,0 +1,105 @@
+#!/usr/bin/env bash
+
+echo "system task"
+
+# Create github directory
+if [ ! -d "$GITHUB_DIR" ]; then
+    mkdir -p "$GITHUB_DIR"
+fi
+
+# Packages to install
+packages=(
+    zsh
+    tmux
+    i3
+    picom
+    xorg
+    xinit
+    lightdm
+    alsa-utils
+    pulseaudio
+    pulseaudio-module-bluetooth
+    stow
+    tldr
+    libx11-dev
+    gcc
+    valgrind
+    build-essential
+    libxft-dev
+    gawk
+    fd-find
+    ripgrep
+    ninja-build
+    gettext
+    cmake
+    unzip
+    curl
+    gpg
+    mokutil
+    qemu-system
+    libvirt-daemon-system
+    libvirt-clients
+    bridge-utils
+    virt-manager
+    qemu-guest-agent
+    pass
+    ufw
+    dkms
+    fswatch
+    ntfs-3g
+    fuse3
+    fwupd
+    polybar
+    luarocks
+    python3.11-venv
+    ffmpeg
+    vlc
+    mpv
+    imagemagick
+    inotify-tools
+    slick-greeter
+    feh
+    bc
+    genisoimage
+    network-manager
+    rofi
+    maim
+    xdotool
+    libsecret-1-dev
+    jq
+    libcunit1-dev
+    sqlite3
+    libsqlite3-dev
+    libimlib2-dev
+    libxcb-util-dev
+    acpid
+    lm-sensors
+    iw
+    pinentry-gtk2
+    xbacklight
+)
+
+# Update system and install packages
+sudo apt update
+sudo apt install -y "${packages[@]}"
+
+# Activate firewall
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw enable
+
+# Set lightdm as default display manager
+sudo dpkg-reconfigure lightdm
+
+# Add user to groups
+sudo adduser "$USER" libvirt
+sudo adduser "{{ username }}" kvm
+
+# Enable virtualisation daemon
+sudo systemctl enable libvirtd
+
+# Set zsh as default shell
+sudo chsh -s $(which zsh) $USER
+
+# Hide default option in lightdm
+echo "Hidden=true" | sudo tee -a /usr/share/xsessions/lightdm-xsession.desktop

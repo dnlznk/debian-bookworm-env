@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+echo "neovim task"
+
+dir="$GITHUB_DIR/neovim"
+version="v0.11.3"
+
+if [ ! -d "$dir" ]; then
+    git clone --branch "$version" https://github.com/neovim/neovim "$dir"
+
+    cd "$dir"
+else
+    cd "$dir"
+
+    git checkout "$version"
+fi
+
+sudo make CMAKE_BUILD_TYPE=Release
+sudo make install
