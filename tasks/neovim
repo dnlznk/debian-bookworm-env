@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-echo "neovim task"
-
 dir="$GITHUB_DIR/neovim"
 version="v0.11.3"
 

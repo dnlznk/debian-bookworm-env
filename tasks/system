@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-echo "system task"
-
 # Create github directory
 if [ ! -d "$GITHUB_DIR" ]; then
     mkdir -p "$GITHUB_DIR"
