@@ -130,7 +130,6 @@ sudo ln -s lightdm/slick-greeter.conf /etc/lightdm/lightdm.conf
 source zsh/.config/zsh/zsh-functions
 source zsh/.config/zsh/zsh-exports
 
-
 mkdir -p $create_dir
 cp "$secrets_dir/one" $secret_one_dest
 cp "$secrets_dir/two" $secret_two_dest
