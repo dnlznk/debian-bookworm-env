@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Create github directory
-if [ ! -d "$GITHUB_DIR" ]; then
+if [[ ! -d "$GITHUB_DIR" ]]; then
     mkdir -p "$GITHUB_DIR"
 fi
 
@@ -90,14 +90,64 @@ sudo ufw enable
 sudo dpkg-reconfigure lightdm
 
 # Add user to groups
-sudo adduser "$USER" libvirt
-sudo adduser "{{ username }}" kvm
+user="$USER"
+sudo adduser "$user" libvirt
+sudo adduser "$user" kvm
 
 # Enable virtualisation daemon
 sudo systemctl enable libvirtd
 
 # Set zsh as default shell
-sudo chsh -s $(which zsh) $USER
+sudo chsh -s $(which zsh) $user
 
 # Hide default option in lightdm
-echo "Hidden=true" | sudo tee -a /usr/share/xsessions/lightdm-xsession.desktop
+echo "Hidden=true" | sudo tee /usr/share/xsessions/lightdm-xsession.desktop
+
+# Get dotfiles
+dotfiles_dir=$HOME/.dotfiles
+if [[ -d "$dotfiles_dir" ]]; then
+    exit 0
+fi
+
+source <(gpg -d $(pwd)/vars/secrets 2> /dev/null)
+
+git clone "https://oauth2:$gh_pat@github.com/dnlznk/.dotfiles" $dotfiles_dir
+cd $dotfiles_dir
+git remote remove origin
+git remote add origin "git@github.com:dnlznk/.dotfiles"
+
+rm $HOME/.zshenv
+
+./linux
+
+sudo mkdir -p /usr/share/backgrounds
+sudo cp wallpaper/tropical-beach.jpg /usr/share/backgrounds/tropical-beach.jpg
+
+sudo rm /etc/lightdm/lightdm.conf
+sudo ln -s lightdb/lightdm.conf /etc/lightdm/lightdm.conf
+sudo ln -s lightdm/slick-greeter.conf /etc/lightdm/lightdm.conf
+
+source zsh/.config/zsh/zsh-functions
+source zsh/.config/zsh/zsh-exports
+
+
+mkdir -p $create_dir
+cp "$secrets_dir/one" $secret_one_dest
+cp "$secrets_dir/two" $secret_two_dest
+chmod "0600" $secret_two_dest
+cp "$secrets_dir/three" $secret_three_dest
+cp "$secrets_dir }}/four" $secret_four_dest
+chmod "0600" $secret_four_dest
+cp "$secrets_dir/five" $secret_five_dest
+cp "$secrets_dir/six" $secret_six_dest
+chmod "0600" $secret_six_dest
+cp "$secrets_dir/seven" $secret_seven_dest
+
+mkdir -p $key_dir
+cp "$secrets_dir/eight" $key_one_dest
+cp "$secrets_dir/nine" $key_two_dest
+
+git clone git@github.com:dnlznk/pass-store $PASSWORD_STORE_DIR
+git git@github.com:dnlznk/notes $HOME/Documents/Notes
+
+cd -

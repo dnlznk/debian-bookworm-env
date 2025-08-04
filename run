@@ -3,6 +3,7 @@
 script_dir=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
 filter=""
 dry="0"
+system_task="./tasks/system"
 
 while [[ $# > 0 ]]; do
     if [[ $1 == "--dry" ]]; then
@@ -32,14 +33,29 @@ execute() {
     "$@"
 }
 
+filter() {
+    log "filtering $1"
+
+    if echo "$1" | grep -qv "$1"; then
+        log "filtering $1"
+        return 1
+    fi
+
+    return 0
+}
+
 log "$script_dir -- $filter"
 
+if ! filter "$system_task"; then
+    execute $system_task
+fi
+
 cd $script_dir
-scripts=$(find ./tasks -maxdepth 1 -mindepth 1 -executable -type f)
+scripts=$(find ./tasks -maxdepth 1 -mindepth 1 -executable -type f -not -path "$system_task")
+echo $scripts
 
 for script in $scripts; do
-    if echo "$script" | grep -qv "$filter"; then
-        log "filtering $script"
+    if filter "$script"; then
         continue
     fi
 

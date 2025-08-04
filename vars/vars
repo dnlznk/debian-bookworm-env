@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+username="$USER"
+home="$HOME"
+github_dir="$home/github"
+dotfiles_dir="$home/.dotfiles"
+fzf_dir="$github_dir/fzf"
+neovim_dir="$github_dir/neovim"
+nvm_dir="$github_dir/nvm"
+st_dir="$github_dir/st"
+
