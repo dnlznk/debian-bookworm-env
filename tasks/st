@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+dir="$GITHUB_DIR/st"
+
+if [[ -d $dir ]]; then
+    sudo rm $dir/config.h
+else
+    git clone git@github.com:dnlznk/st $dir
+fi
+
+cd $dir
+sudo make clean install
+cd -
