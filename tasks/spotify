@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if ! command -v spotify; then
+    exit 0
+fi
+
+sudo curl -sS https://download.spotify.com/debian/pubkey_6224F9941A8AA6D1.gpg | gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/spotify.gpg
+echo "deb https://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
+sudo apt install -y spotify-client
