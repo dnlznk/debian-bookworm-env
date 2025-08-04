@@ -34,9 +34,7 @@ execute() {
 }
 
 filter() {
-    log "filtering $1"
-
-    if echo "$1" | grep -qv "$1"; then
+    if echo "$1" | grep -qv "$filter"; then
         log "filtering $1"
         return 1
     fi
@@ -46,18 +44,17 @@ filter() {
 
 log "$script_dir -- $filter"
 
-if ! filter "$system_task"; then
+if filter "$system_task"; then
     execute $system_task
 fi
 
 cd $script_dir
 scripts=$(find ./tasks -maxdepth 1 -mindepth 1 -executable -type f -not -path "$system_task")
-echo $scripts
 
 for script in $scripts; do
-    if filter "$script"; then
+    if ! filter "$script"; then
         continue
     fi
-
+    
     execute $script
 done
