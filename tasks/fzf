@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+dir=$HOME/github/fzf
+version="v0.65.1"
+
+git clone --branch "$version" https://github.com/junegunn/fzf.git $dir
+
+$dir/install --all
