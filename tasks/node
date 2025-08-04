@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+version="v0.40.3"
+
+if [[ ! -d $NVM_DIR ]]; then
+    mkdir -p $NVM_DIR
+    git clone --branch "$version" https://github.com/nvm-sh/nvm $NVM_DIR
+else
+    cd $NVM_DIR
+    git checkout $version
+    git pull
+    cd -
+fi
+
+source $NVM_DIR/nvm.sh
+nvm install --lts
