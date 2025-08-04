@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+file=$(mktemp)
+
+curl -fsSLo $file "https://sh.rustup.rs"
+chmod "0755" $file
+$file/sh.rustup.rs -y
