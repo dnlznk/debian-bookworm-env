@@ -135,7 +135,7 @@ cp "$secrets_dir/one" $secret_one_dest
 cp "$secrets_dir/two" $secret_two_dest
 chmod "0600" $secret_two_dest
 cp "$secrets_dir/three" $secret_three_dest
-cp "$secrets_dir }}/four" $secret_four_dest
+cp "$secrets_dir/four" $secret_four_dest
 chmod "0600" $secret_four_dest
 cp "$secrets_dir/five" $secret_five_dest
 cp "$secrets_dir/six" $secret_six_dest
