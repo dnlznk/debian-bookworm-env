@@ -11,4 +11,6 @@ dearmor=$(mktemp)
 wget -nv -O$out https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > $dearmor
 sudo install -D -m 644 $dearmor $target
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
+
+sudo apt update
 sudo apt install -y code
