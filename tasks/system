@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+exit 0
+
 # Create github directory
 if [[ ! -d "$GITHUB_DIR" ]]; then
     mkdir -p "$GITHUB_DIR"
