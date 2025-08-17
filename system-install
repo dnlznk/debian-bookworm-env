@@ -9,7 +9,6 @@ fi
 packages=(
     zsh
     tmux
-    i3
     picom
     xorg
     xinit
@@ -82,9 +81,6 @@ sudo ufw enable
 
 # Set lightdm as default display manager
 sudo dpkg-reconfigure lightdm
-
-# Enable virtualisation daemon
-sudo systemctl enable libvirtd
 
 # Set zsh as default shell
 sudo chsh -s $(which zsh) $user

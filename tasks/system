@@ -3,15 +3,15 @@
 exit 0
 
 # Create github directory
-if [[ ! -d "$GITHUB_DIR" ]]; then
-    mkdir -p "$GITHUB_DIR"
+github_dir="$HOME/github"
+if [[ ! -d "$github_dir" ]]; then
+    mkdir -p "$github_dir"
 fi
 
 # Packages to install
 packages=(
     zsh
     tmux
-    i3
     picom
     xorg
     xinit
@@ -90,14 +90,6 @@ sudo ufw enable
 
 # Set lightdm as default display manager
 sudo dpkg-reconfigure lightdm
-
-# Add user to groups
-user="$USER"
-sudo adduser "$user" libvirt
-sudo adduser "$user" kvm
-
-# Enable virtualisation daemon
-sudo systemctl enable libvirtd
 
 # Set zsh as default shell
 sudo chsh -s $(which zsh) $user
